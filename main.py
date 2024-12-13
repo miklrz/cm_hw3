@@ -79,8 +79,8 @@ def format_list(array: List[Any]) -> str:
     return "(list " + " ".join(map(str, array)) + ")"
 
 def format_table(value: Dict[str, Any]) -> str:
-    formatted_items = [f"{k} = {v}" for k, v in value.items()]
-    return "table([" + ", ".join(formatted_items) + "])"
+    formatted_items = [f"\n{k} = {v}" for k, v in value.items()]
+    return "table([" + ", ".join(formatted_items) + "\n])"
 
 def evaluate_infix(expression: str, constants: Dict[str, Any]) -> Any:
     """Оценка инфиксного выражения (простая версия)"""

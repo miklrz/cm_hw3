@@ -1,0 +1,19 @@
+{{!
+comment
+comment
+}}
+
+Constant1 = 100
+Constant2 = 25
+
+Values = [1, 2, 3, 4]
+
+Expr1 = "|Constant1 Constant2 +|"
+Expr2 = "|Constant1 Constant2 -|"
+Expr3 = "|Constant1 2 *|"
+Expr4 = "|Constant1 5 /|"
+Expr5 = "|Constant1 Constant2 min|"
+
+["Dict"]
+Key1 = 10
+Key2 = 20
