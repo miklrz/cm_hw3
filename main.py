@@ -86,15 +86,18 @@ def evaluate_infix(expression: str, constants: Dict[str, Any]) -> Any:
     """Оценка инфиксного выражения (простая версия)"""
     stack = deque()
     tokens = expression.split()
+    operator = None
     for token in tokens:
         if token.isdigit():  # Если токен число
             stack.append(int(token))
         elif token in constants:  # Если токен это имя
             stack.append(constants[token])
         elif token in OPERATORS:  # Если это операция
+            operator = token
+        elif token in OPERATORS and len(stack) % 2 ==0:
             b = stack.pop()
             a = stack.pop()
-            result = OPERATORS[token](a, b)
+            result = OPERATORS[operator](a, b)
             stack.append(result)
         else:
             raise ValueError(f"Неизвестный токен '{token}'")
@@ -111,17 +114,17 @@ def process_data(data: Dict[str, Any], constants: Dict[str, Any], comments: List
         output_line = ""
 
         if isinstance(value, (int, float)):  # Простое значение
-            output_line = f"{value} -> {key}"
+            output_line = f"{key}: {value}"
             constants[key] = value
         elif isinstance(value, list):  # Массив
-            output_line = f"{format_list(value)} -> {key}"
+            output_line = f"{key}: {format_list(value)}"
         elif isinstance(value, dict):  # Словарь
-            output_line = f"{format_table(value)} -> {key}"
-        elif isinstance(value, str) and value.startswith("|") and value.endswith("|"):  # Постфиксное выражение
+            output_line = f"{key}:  {format_table(value)}"
+        elif isinstance(value, str) and value.startswith("|") and value.endswith("|"):  # Инфиксное выражение
             expression = value[1:-1].strip()  # Убираем '|' с концов
             try:
                 result = evaluate_infix(expression, constants)
-                output_line = f"{result} -> {expression}"
+                output_line = f"{expression}: {result}"
                 constants[key] = result
             except ValueError as e:
                 raise ValueError(f"Ошибка в выражении для '{key}': {e}")
@@ -129,11 +132,6 @@ def process_data(data: Dict[str, Any], constants: Dict[str, Any], comments: List
             raise ValueError(f"Некорректный формат для '{key}'")
 
         output_lines.append(output_line)
-
-        # Добавляем комментарий, если есть соответствующий
-        current_index = len(output_lines) - 1  # Индекс текущей строки вывода
-        if current_index in comment_dict:
-            output_lines[-1] += f"   {{! {comment_dict[current_index]} !}}"
 
     return output_lines
 

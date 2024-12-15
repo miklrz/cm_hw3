@@ -1,12 +1,12 @@
-100 -> Constant1   {! {{! comment comment }} !}
-25 -> Constant2
-(list 1 2 3 4) -> Values
-125 -> Constant1 Constant2 +
-75 -> Constant1 Constant2 -
-200 -> Constant1 2 *
-20.0 -> Constant1 5 /
-25 -> Constant1 Constant2 min
-table([
+Constant1: 100
+Constant2: 25
+Values: (list 1 2 3 4)
+Constant1 + Constant2: 25
+Constant1 - Constant2: 25
+Constant1 * 2: 2
+Constant1 / 5: 5
+Constant1 min Constant2: 25
+Dict:  table([
 Key1 = 10, 
 Key2 = 20
-]) -> Dict
+])

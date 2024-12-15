@@ -41,36 +41,36 @@ Key2 = 20"""
 
     def test_evaluate_infix(self):
         constants = {"a": 10, "b": 5}
-        expression = "a b +"
+        expression = "a + b"
         result = evaluate_infix(expression, constants)
         self.assertEqual(result, 15)
 
-        expression = "a b *"
+        expression = "a * b"
         result = evaluate_infix(expression, constants)
         self.assertEqual(result, 50)
 
-        expression = "a b -"
+        expression = "a - b"
         result = evaluate_infix(expression, constants)
         self.assertEqual(result, 5)
 
         with self.assertRaises(ValueError):
-            evaluate_infix("a b %", constants)  # Unsupported operator
+            evaluate_infix("a % b", constants)  # Unsupported operator
 
     def test_process_data(self):
         data = {
             "Key1": 10,
             "Key2": 20,
             "Key3": [1, 2, 3],
-            "Key4": "|Key1 Key2 +|"
+            "Key4": "|Key1 + Key2|"
         }
         constants = {}
         comments = []
         result = process_data(data, constants, comments)
         expected_result = [
-            "10 -> Key1",
-            "20 -> Key2",
-            "(list 1 2 3) -> Key3",
-            "30 -> Key1 Key2 +"
+            "Key1: 10",
+            "Key2: 20",
+            "Key3: (list 1 2 3)",
+            "Key1 + Key2: 30"
         ]
         self.assertEqual(result, expected_result)
 
