@@ -52,8 +52,6 @@
 - Валидация имен переменных и ключей.
 - Обработка массивов, словарей и выражений.
 - Вычисление арифметических операций в инфиксной нотации.
-- Поддержка пользовательских комментариев в выходных данных.
-
 ---
 
 ## Функциональность
@@ -87,11 +85,11 @@ Constant2 = 25
 
 Values = [1, 2, 3, 4]
 
-Expr1 = "|Constant1 Constant2 +|"
-Expr2 = "|Constant1 Constant2 -|"
-Expr3 = "|Constant1 2 *|"
-Expr4 = "|Constant1 5 /|"
-Expr5 = "|Constant1 Constant2 min|"
+Expr1 = "|Constant1 + Constant2|"
+Expr2 = "|Constant1 - Constant2|"
+Expr3 = "|Constant1 * 2|"
+Expr4 = "|Constant1 / 5|"
+Expr5 = "|Constant1 min Constant2|"
 
 ["Dict"]
 Key1 = 10
@@ -101,18 +99,18 @@ Key2 = 20
 ### Пример вывода
 
 ```
-100 -> Constant1   {! {{! comment comment }} !}
-25 -> Constant2
-(list 1 2 3 4) -> Values
-125 -> Constant1 Constant2 +
-75 -> Constant1 Constant2 -
-200 -> Constant1 2 *
-20.0 -> Constant1 5 /
-25 -> Constant1 Constant2 min
-table([
+Constant1: 100
+Constant2: 25
+Values: (list 1 2 3 4)
+Constant1 + Constant2: 125
+Constant1 - Constant2: 75
+Constant1 * 2: 200
+Constant1 / 5: 20.0
+Constant1 min Constant2: 25
+Dict:  table([
 Key1 = 10, 
 Key2 = 20
-]) -> Dict
+])
 ```
 ---
 

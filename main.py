@@ -94,14 +94,14 @@ def evaluate_infix(expression: str, constants: Dict[str, Any]) -> Any:
             stack.append(constants[token])
         elif token in OPERATORS:  # Если это операция
             operator = token
-        elif token in OPERATORS and len(stack) % 2 ==0:
-            b = stack.pop()
-            a = stack.pop()
-            result = OPERATORS[operator](a, b)
-            stack.append(result)
         else:
             raise ValueError(f"Неизвестный токен '{token}'")
-    return stack.pop()
+    if operator and len(stack) % 2 ==0:
+        b = stack.pop()
+        a = stack.pop()
+        result = OPERATORS[operator](a, b)
+        return result
+    else: return None
 
 def process_data(data: Dict[str, Any], constants: Dict[str, Any], comments: List[Tuple[int, str]]) -> List[str]:
     output_lines = []
